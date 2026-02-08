@@ -37,13 +37,19 @@ async function main() {
     updateInterval: parseInt(process.env.UPDATE_INTERVAL) || 60000,
     groupMode: process.env.GROUP_MODE === 'true',
     groupName: process.env.GROUP_NAME || 'Home Assistant Bot',
-    debugMode: process.env.DEBUG_MODE === 'true'
+    debugMode: process.env.DEBUG_MODE === 'true',
+    signalMode: process.env.SIGNAL_MODE || 'normal' // 'normal' or 'json-rpc'
   };
+  
+  logger.info(`Signal mode: ${config.signalMode}`);
   
   // Initialize clients
   const ha = new HomeAssistant(config.haUrl, config.haToken);
-  const signal = new SignalClient(config.signalApiUrl, config.signalNumber);
+  const signal = new SignalClient(config.signalApiUrl, config.signalNumber, config.signalMode);
   const parser = new CommandParser(ha);
+  
+  // Initialize Signal connection (important for JSON-RPC mode)
+  await signal.init();
   
   // Connection test
   try {

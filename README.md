@@ -19,7 +19,7 @@ A Dockerized bridge service that connects Signal messaging with Home Assistant a
 You need a running Signal CLI REST API instance:
 
 ```yaml
-# docker-compose.yml for Signal CLI
+# docker-compose.yml for Signal CLI (REST API mode - recommended)
 version: '3.8'
 services:
   signal-cli:
@@ -31,6 +31,9 @@ services:
     ports:
       - "8080:8080"
 ```
+
+**Note:** This bot supports both REST API mode (`MODE=normal`) and JSON-RPC mode (`MODE=json-rpc`). 
+Set `SIGNAL_MODE=json-rpc` in your `.env` if using JSON-RPC mode.
 
 Register your number first:
 ```bash
