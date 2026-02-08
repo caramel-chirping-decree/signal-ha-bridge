@@ -15,9 +15,4 @@ services:
       - LOG_LEVEL=${LOG_LEVEL:-info}
     volumes:
       - ./logs:/app/logs
-    networks:
-      - bridge
-
-networks:
-  bridge:
-    external: true
+    # Use default Docker network - remove custom network config
