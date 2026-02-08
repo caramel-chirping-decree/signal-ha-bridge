@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  signal-ha-bridge:
+    build: .
+    container_name: signal-ha-bridge
+    restart: unless-stopped
+    environment:
+      - HA_URL=${HA_URL}
+      - HA_TOKEN=${HA_TOKEN}
+      - SIGNAL_API_URL=${SIGNAL_API_URL}
+      - SIGNAL_NUMBER=${SIGNAL_NUMBER}
+      - ALLOWED_NUMBERS=${ALLOWED_NUMBERS}
+      - UPDATE_INTERVAL=${UPDATE_INTERVAL:-60000}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - bridge
+
+networks:
+  bridge:
+    external: true
